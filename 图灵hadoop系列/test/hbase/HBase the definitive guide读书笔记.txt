@@ -1,0 +1,12 @@
+HBase the definitive guide读书笔记
+Chatper 1
+传统关系型数据库中包含的一些问题：
+1 大数据灾难
+	PB级数据存储、连续月/年数据存储——hadoop project（free I/O between hadoop and RDBMS）
+	面向列存(columns-oriented)储特点：
+		1)、不是每次查询都需要所有的列；
+		2)、同列数据类型相似或变化范围有限，更易压缩，省带宽。
+	hbase是一种column-family-oriented存储状态，在每个列族中，是按row-oriented存储。
+	hbase并非column-oriented存储格式，而是“磁盘列存储格式”，与传统的columnar database（擅长实时访问）不同。
+	hbase擅长提供对特定数据单元或数据集的基于键的访问。
+2 关系型数据库问题

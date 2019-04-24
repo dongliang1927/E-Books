@@ -1,0 +1,18 @@
+oozie读书笔记
+chapter 1
+背景：1）不同类型语言程序的高并发、高耦合且顺序敏感的程序调度；
+	  2）能够跟踪程序中的错误，避免程序出错带来的系统崩溃，系统更容易恢复。
+
+需求：1）便于理解的编程模型来促进它的采用率，减少使用者上手时间；
+	  2）如果程序出错，需要很容易解决问题并恢复工作；
+	  3）需要高扩展性，来支持新类型的job；
+	  4）他应当弹性的支撑上千个并发job；
+	  5）jobs应当在服务器中运行，以增加可靠性；
+	  6）它应当是支持多用户的服务，来降低操作成本。
+
+适用范围：oozie可以用来运行任何语言写的hadoop任务，也可以用来调度java class和shell script。
+
+定义：oozie是hadoop jobs的业务流程系统。被设计用来将多个hadoop jobs转化为一个oozie job。
+	  oozie可以被配置为按需（workflow jobs）或周期性（coordinator jobs）的运行。
+	  第三种调度方式为bundle jobs。它由一系列的coordinator jobs组合，并由一个单独的job管理。
+

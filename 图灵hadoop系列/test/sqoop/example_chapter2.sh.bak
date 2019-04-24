@@ -1,0 +1,45 @@
+#!/bin/bash
+
+## 增量导入，不导入历史数据即使udpate
+## 该例子仅仅导入id大于１的增量数据。对历史数据不做transfer，即使源数据有update操作。
+## 当运行该程序时，会自动打印出最后一行记录的id数，作为下次运行的起点
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table visits \
+--incremental append \
+--check-column id \
+--last-value 1
+
+## 增量导入，导入历史数据，如果udpate
+sqoop import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table visits \
+--incremental lastmodified \
+--check-column last_update_date \
+--last-value "2013-05-22 01:01:01"
+
+## 新建一个增量导入job用于解决 --last-value 参数存储问题，每次执行都会自动记录上次的 --last-value，可以自动执行。
+sqoop job \
+	--create visits \
+-- \
+import \
+--connect jdbc:mysql://mysql.example.com/sqoop \
+--username sqoop \
+--password sqoop \
+--table visits \
+--incremental append \
+--check-column id \
+--last-value 0
+
+sqoop job --exec visits
+sqoop job --list # 列出所有job
+sqoop job --delete visits # 删除job
+sqoop job --show visits # 显示内容
+
+## security of password
+# best way is use --password-file, 
+# the other is set property 'sqoop.metastore.client.recordpassword' in the 'sqoop-site.xml' to 'ture'
